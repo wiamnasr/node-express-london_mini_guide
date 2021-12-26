@@ -57,11 +57,13 @@ app.get("/", (req, res) => {
     success: true,
     msg: "Welcome to my london mini guide API, checkout the methods and urls",
     methods: {
-      "/pharmacies": "returns an array of pharmacies for a specific area",
-      "/colleges": "returns an array of colleges for a specific area",
-      "/doctors": "returns an array of doctors for a specific area",
-      "/hospitals": "returns an array of hospitals for a specific area",
+      "AREA/pharmacies": "returns an array of pharmacies for a specific area",
+      "AREA/colleges": "returns an array of colleges for a specific area",
+      "AREA/doctors": "returns an array of doctors for a specific area",
+      "AREA/hospitals": "returns an array of hospitals for a specific area",
     },
+    coveredAreas: ["Stratford", "Heathrow", "Harrow"],
+    exampleQuery: "/stratford/doctors",
   });
 });
 
