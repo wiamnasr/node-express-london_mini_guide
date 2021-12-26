@@ -1,0 +1,23 @@
+{
+  "name": "express-london_mini_guide",
+  "version": "1.0.0",
+  "description": "CYF project based on Ahmad-Ali's London mini guide web scraping challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiamnasr/node-express-london_mini_guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiamnasr/node-express-london_mini_guide/issues"
+  },
+  "homepage": "https://github.com/wiamnasr/node-express-london_mini_guide#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
