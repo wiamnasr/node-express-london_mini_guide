@@ -6,58 +6,50 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // data
-const {
-  pharmacies: stratfordPharmacies,
-  colleges: stratfordColleges,
-  doctors: stratfordDoctors,
-  hospitals: stratfordHospitals,
-} = require("./data/Stratford.json");
-
-const {
-  pharmacies: heathrowPharmacies,
-  colleges: heathrowColleges,
-  doctors: heathrowDoctors,
-  hospitals: heathrowHospitals,
-} = require("./data/Heathrow.json");
-
-const {
-  pharmacies: harrowPharmacies,
-  colleges: harrowColleges,
-  doctors: harrowDoctors,
-  hospitals: harrowHospitals,
-} = require("./data/Harrow.json");
+const stratfordData = require("./data/Stratford.json");
+const heathrowData = require("./data/Heathrow.json");
+const harrowData = require("./data/Harrow.json");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors());
 
-app.get("/:city/pharmacies", (req, res) => {
+app.get("/:city/:criteria", (req, res) => {
   const { city } = req.params;
+  const { criteria } = req.params;
 
-  if (city) {
-    if (city.toLowerCase() === "stratford") {
-      res.status(200).json({
-        success: true,
-        stratfordPharmacies,
-      });
-    } else if (city.toLowerCase() === "heathrow") {
-      res.status(200).json({
-        success: true,
-        heathrowPharmacies,
-      });
-    } else if (city.toLowerCase() === "harrow") {
-      res.status(200).json({
-        success: true,
-        harrowPharmacies,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        msg: "not a valid city...",
-      });
-    }
+  const city_validator =
+    city.toLowerCase() === "stratford" ||
+    city.toLowerCase() === "heathrow" ||
+    city.toLowerCase() === "harrow";
+  const criteria_validator =
+    criteria.toLowerCase() === "pharmacies" ||
+    criteria.toLowerCase() === "colleges" ||
+    criteria.toLowerCase() === "doctors" ||
+    criteria.toLowerCase() === "hospitals";
+
+  if (city_validator && criteria_validator) {
+    const userSearch = () => {
+      if (city.toLowerCase() === "stratford") {
+        return stratfordData[criteria];
+      } else if (city.toLowerCase() === "heathrow") {
+        return heathrowData[criteria];
+      } else if (city.toLowerCase() === "harrow") {
+        return harrowData[criteria];
+      }
+    };
+    return res.status(200).json({
+      success: true,
+      searchCriteria: criteria,
+      result: userSearch(),
+    });
   }
+
+  res.status(404).json({
+    success: false,
+    msg: "you have entered an invalid city or search criteria...",
+  });
 });
 
 app.get("/", (req, res) => {
